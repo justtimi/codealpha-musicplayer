@@ -340,10 +340,16 @@ See `package.json` for the complete list of dependencies and versions.
 Overall, this was a really fun and challenging project. I got better at React Context, hooks, conditional rendering, and UI design. I now feel confident building interactive and dynamic front-end apps from scratch. This experience has strengthened my understanding of modern React patterns and state management!
 
 ---
+## 📫 Contact
 
-## 📝 License
+If you want to reach out, you can contact me through:  
 
-This project is open source. Feel free to use it as a learning resource.
+- **Email:** afolayant537@gmail.com  
+- **GitHub:** [https://github.com/justtimi](https://github.com/justtimi)  
+- **LinkedIn:** [https://www.linkedin.com/in/timileyin-afolayan-07725a334/](https://www.linkedin.com/in/timileyin-afolayan-07725a334/)  
+
+Feel free to ask questions, give feedback, or just say hi! 🙂
+
 
 ---
 
