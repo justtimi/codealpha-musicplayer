@@ -40,7 +40,7 @@ The goal of the project was to build a music player that could:
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
@@ -57,6 +57,15 @@ src/
 ├── data/               # Sample song data
 └── App.jsx             # Main component
 ```
+
+### Key Files
+
+| File                 | Purpose                    | Link                                                                       |
+| -------------------- | -------------------------- | -------------------------------------------------------------------------- |
+| `PlayerContext.jsx`  | Main state management hook | [`src/contexts/PlayerContext.jsx`](./src/contexts/PlayerContext.jsx)       |
+| `PlayerControls.jsx` | Play/pause/skip buttons    | [`src/components/PlayerControls.jsx`](./src/components/PlayerControls.jsx) |
+| `ProgressBar.jsx`    | Song progress display      | [`src/components/ProgressBar.jsx`](./src/components/ProgressBar.jsx)       |
+| `App.jsx`            | Main app component         | [`src/App.jsx`](./src/App.jsx)                                             |
 
 ---
 
@@ -89,9 +98,62 @@ function PlayerControls() {
 }
 ```
 
+**More detailed example** ([`PlayerControls.jsx`](./src/components/PlayerControls.jsx)):
+
+```jsx
+import React from "react";
+import { Play, Pause, Rewind, FastForward } from "lucide-react";
+import { usePlayer } from "../contexts/PlayerContext";
+
+const PlayerControls = () => {
+  const { isPlaying, togglePlayPause, next, prev } = usePlayer();
+
+  return (
+    <div className="gap-3 flex">
+      <button onClick={prev}>
+        <Rewind fill="white" />
+      </button>
+      <button onClick={togglePlayPause}>
+        {isPlaying ? <Pause fill="white" /> : <Play fill="white" />}
+      </button>
+      <button onClick={next}>
+        <FastForward fill="white" />
+      </button>
+    </div>
+  );
+};
+
+export default PlayerControls;
+```
+
+**View the full context setup** ([`PlayerContext.jsx`](./src/contexts/PlayerContext.jsx))
+
 ### useRef Hook
 
 I learned that `useRef` can be used to control other elements — which I used for controlling the `<audio>` element. This allows direct DOM manipulation without triggering re-renders.
+
+**Example from PlayerContext.jsx:**
+
+```jsx
+const audioRef = useRef(new Audio());
+
+const play = () => {
+  if (currentSong) {
+    audioRef.current.play();
+    setIsPlaying(true);
+  }
+};
+
+const pause = () => {
+  audioRef.current.pause();
+  setIsPlaying(false);
+};
+
+const changeVolume = (value) => {
+  audioRef.current.volume = value; // Direct DOM manipulation
+  setVolume(value);
+};
+```
 
 ### Conditional Rendering & UI
 
@@ -100,11 +162,104 @@ I learned that `useRef` can be used to control other elements — which I used f
 - Volume icons change dynamically depending on the volume level
 - Learned about **inset** in Tailwind CSS for precise positioning
 
+**Example from ProgressBar.jsx** ([view file](./src/components/ProgressBar.jsx)):
+
+```jsx
+const ProgressBar = () => {
+  const { currentSong, progress } = usePlayer();
+
+  return (
+    <div className="bg-black/30 rounded-md overflow-hidden">
+      <div className="flex items-center justify-between gap-3">
+        <img
+          className="w-10 h-10 m-1.5 rounded object-cover"
+          src={currentSong.cover}
+          alt=""
+        />
+        <div>
+          {/* Conditional rendering - show song info */}
+          {currentSong && (
+            <>
+              <p className="font-semibold">{currentSong.title}</p>
+              <p className="text-sm">{currentSong.artist}</p>
+            </>
+          )}
+        </div>
+      </div>
+      {/* Dynamic progress bar width */}
+      <div className="bg-white/20 h-1 w-full relative">
+        <div
+          className="bg-white h-1 absolute top-0 left-0"
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
+    </div>
+  );
+};
+```
+
 ### Design & Motion
 
 - Explored **Glassmorphic UI** for a modern, translucent look
 - Added animations using **Framer Motion** for smooth, delightful interactions
 - Implemented responsive design with Tailwind CSS
+
+**App.jsx** - Glassmorphic design with dynamic background ([view full file](./src/App.jsx)):
+
+```jsx
+const App = () => {
+  const { currentSong } = usePlayer();
+
+  return (
+    <div className="relative w-full min-h-screen overflow-hidden">
+      {/* Dynamic blurred background that changes with song */}
+      {currentSong && (
+        <div
+          className="absolute inset-0 bg-center bg-cover blur-3xl scale-110 brightness-75 transition-all duration-700"
+          style={{ backgroundImage: `url(${currentSong.cover})` }}
+        ></div>
+      )}
+
+      {/* Dark overlay for glassmorphic effect */}
+      <div className="absolute inset-0 bg-black/40"></div>
+
+      {/* Main UI content with glassmorphic container */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-white p-6">
+        <Header />
+        <div className="w-full">
+          <AlbumArt />
+          {/* Glassmorphic player bar */}
+          <div className="flex justify-between items-center gap-4 bg-white/5 py-2 px-8 rounded-full border border-b-0 border-white/50 w-full">
+            <PlayerControls />
+            <ProgressBar />
+          </div>
+          <Playlist />
+        </div>
+      </div>
+    </div>
+  );
+};
+```
+
+---
+
+## 💻 Code Examples & Patterns
+
+### Quick Links to Source Files
+
+- **State Management**: [`PlayerContext.jsx`](./src/contexts/PlayerContext.jsx) - Custom React Context with usePlayer hook
+- **Player Controls**: [`PlayerControls.jsx`](./src/components/PlayerControls.jsx) - Play/pause/skip button logic
+- **Progress Display**: [`ProgressBar.jsx`](./src/components/ProgressBar.jsx) - Song progress and metadata
+- **Main Layout**: [`App.jsx`](./src/App.jsx) - Component composition and styling
+- **Song Data**: [`data.js`](./src/data/data.js) - Sample playlist data structure
+
+### Common Patterns Used
+
+1. **Custom Hook Pattern** - `usePlayer()` hook for accessing context
+2. **Controlled Component Pattern** - Audio element controlled via useRef
+3. **Conditional Rendering** - Ternary operators for dynamic UI
+4. **Dynamic Styling** - Inline styles with state variables for animations
+5. **Component Composition** - Modular components combined in App.jsx
 
 ---
 
