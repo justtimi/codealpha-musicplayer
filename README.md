@@ -40,7 +40,7 @@ The goal of the project was to build a music player that could:
 
 ---
 
-## � Project Structure
+## Project Structure
 
 ```
 src/
@@ -60,7 +60,7 @@ src/
 
 ---
 
-## �💡 What I Learned
+## What I Learned
 
 This project really made me step out of my comfort zone. Here are the main things I learned:
 
@@ -122,7 +122,7 @@ If you want to try it out locally, here's how:
 1. **Clone the repo:**
 
    ```bash
-   git clone <your-repo-link>
+   git clone https://github.com/justtimi/codealpha-musicplayer.git
    ```
 
 2. **Navigate to the project folder:**
@@ -153,7 +153,7 @@ npm run build
 
 ---
 
-## � How to Use
+## How to Use
 
 - **Play/Pause**: Click the play button to start or pause the current song
 - **Skip Songs**: Use the next and previous buttons to navigate through songs
@@ -180,7 +180,7 @@ See `package.json` for the complete list of dependencies and versions.
 
 ---
 
-## �🌈 Summary
+## Summary
 
 Overall, this was a really fun and challenging project. I got better at React Context, hooks, conditional rendering, and UI design. I now feel confident building interactive and dynamic front-end apps from scratch. This experience has strengthened my understanding of modern React patterns and state management!
 
