@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+.carousel-item:nth-child(1) {
+  transform: rotateY(-40deg) translateX(-200px);
+}
+.carousel-item:nth-child(2) {
+  transform: rotateY(-20deg) translateX(-100px);
+}
+.carousel-item:nth-child(3) {
+  transform: rotateY(0deg) translateX(0px);
+}
+.carousel-item:nth-child(4) {
+  transform: rotateY(20deg) translateX(100px);
+}
+.carousel-item:nth-child(5) {
+  transform: rotateY(40deg) translateX(200px);
+}
